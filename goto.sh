@@ -1,12 +1,10 @@
 #!/bin/bash
-# Copyright (c) 2018 Pooya Kamel <pooyakamel@mail.com>
+# Copyright (c) 2018 Pooya Kamel <pooyakamel@gmail.com>
 # by Pooya Kamel
-# 
-
+#
 # name           Goto command function
 # version        1.0.0
-# description    Goto cmd for OSX Terminal opens address
-#                in new Finder Tab
+# description    Goto cmd for OSX Terminal
 # homepageURL    https://github.com/sirpooya/goto-bash
 # supportURL     https://github.com/sirpooya/goto-bash/issues
 # author         Pooya Kamel
@@ -62,11 +60,6 @@ showHelp () {
 
 if [ $# = 0 ]; then
     showHelp;
-else
-    if [ $(osascript -e 'application "Spotify" is running') = "false" ]; then
-        osascript -e 'tell application "Spotify" to activate'
-        sleep 2
-    fi
 fi
 
 while [ $# -gt 0 ]; do
