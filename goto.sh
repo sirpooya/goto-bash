@@ -38,9 +38,12 @@ cecho(){
     echo $bold$green"$1"$reset;
 }
 
-opent() { if [ $# -eq 0 ] ; then url=`pwd`; parent="${PWD##*/}";
-else url=($1); parent="${url##*/}"; fi;
-osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say "'$parent'"' ; cecho "🙂 Opening \"$parent\" ..."; }
+opent() { 
+    # T0DO : open directories inside : opent bin --> opne ./bin    
+    if [ $# -eq 0 ] ; then url=`pwd`; parent="${PWD##*/}";
+    else url=($1); parent="${url##*/}"; fi;
+    osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say "'$parent'"' ; cecho "🙂 Opening \"$parent\" ...";
+}
 
 goto() {
     while [ $# -gt 0 ]; do

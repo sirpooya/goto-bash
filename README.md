@@ -8,7 +8,7 @@
 
 Provides bookmarking ability for folders/directories in bash.
 
-
+/Users/sirrichard/Library/Services
 
 2. 	copy it to your home folder
 
