@@ -31,9 +31,16 @@ uplink() {
     fi
 }
 
-opent() { if [ $# -eq 0 ] ; then echo "no input!"; url=`pwd`; parent="${PWD##*/}";
-else url=($1); parent="${$1##*/}"; fi;
-osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say "'$parent'"' ; echo $parent; }
+cecho(){
+    bold=$(tput bold);
+    green=$(tput setaf 3);
+    reset=$(tput sgr0);
+    echo $bold$green"$1"$reset;
+}
+
+opent() { if [ $# -eq 0 ] ; then url=`pwd`; parent="${PWD##*/}";
+else url=($1); parent="${url##*/}"; fi;
+osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say "'$parent'"' ; cecho "🙂 Opening \"$parent\" ..."; }
 
 goto() {
     while [ $# -gt 0 ]; do
