@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2018 Pooya Kamel <sirpooya@outlook.com>
+# Copyright (c) 2018 Pooya Kamel <pooyakamel@mail.com>
 # by Pooya Kamel
 # 
 
@@ -7,25 +7,27 @@
 # version        1.0.0
 # description    Goto cmd for OSX Terminal opens address
 #                in new Finder Tab
-# homepageURL    https://github.com/sirpooya/goto
+# homepageURL    https://github.com/sirpooya/goto-bash
 # supportURL     https://github.com/sirpooya/goto-bash/issues
 # author         Pooya Kamel
 # license        GPL
 
 uplink() {
+    #T0DO : uplink <source name> <destination name> -- makes hard link
+    #/usr/local/bin/goto
     link_file=.link
     if [[ ! -f $link_file ]]; then
     echo "No Link file found"
     else 
-        item=`grep "|" ".sync"`;
+        item=`grep ":" ".link"`;
         if [[ -z $item ]]; then
             echo 'No items found to Link'
         else
-            file=`echo "$item" | cut -d\| -f1`
-            link=`echo "$item" | cut -d\| -f2`
+            file=`echo "$item" | cut -d\: -f1`
+            link=`echo "$item" | cut -d\: -f2`
             ln -vif "$file" "$link"
             chmod +x "$link"
-            . ~/.bash_profile
+            #. ~/.bash_profile
             #export PATH=$PATH":$HOME/bin"
         fi
     fi
@@ -66,6 +68,10 @@ else
         sleep 2
     fi
 fi
+
+while [ $# -gt 0 ]; do
+    arg=$1;
+
 
 while [ $# -gt 0 ]; do
     arg=$1;
