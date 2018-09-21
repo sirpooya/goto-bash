@@ -8,13 +8,33 @@
 # description    Goto cmd for OSX Terminal opens address
 #                in new Finder Tab
 # homepageURL    https://github.com/sirpooya/goto
-# supportURL     https://github.com/sirpooya/Trello-Stylish/issues
+# supportURL     https://github.com/sirpooya/goto-bash/issues
 # author         Pooya Kamel
 # license        GPL
 
+update() {
+    sync_file=./.sync
+    if [[ ! -f $sync_file ]]; then
+    echo "Sync file not found"
+    fi
+
+    sync=`grep "|" "./.sync"`
+
+    if [[ -z $sync ]]; then
+        echo 'Sync File is empty or corrupted'
+    else
+        dir=`echo "$sync" | cut -d\| -f1`
+        cp -biu "$dir"
+    fi
+    #export PATH=$PATH":$HOME/bin"
+    #chmod +x filename
+    #. ~/.bash_profile
+}
+
 go() { url=`pwd` ; parent="${PWD##*/}"; osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say "'$parent'"' ; echo $parent; }
 
-goto() { if [ $# -eq 0 ] ; then
+goto() {
+    if [ $# -eq 0 ] ; then
     url=`pwd`;
     elif [ $# = "ver" ] ; then 
     echo "Goto 1.0"; 
@@ -34,8 +54,8 @@ showHelp () {
     echo;
     echo "Commands:";
     echo;
-    echo "  play                         # Resumes playback where Spotify last left off.";
-    echo "  play <song name>             # Finds a song by name and plays it.";
+    echo "  go <bookmark name>               # Gos to directory.";
+    echo "  save <bookmark name>             # make new alias to directory.";
 }
 
 if [ $# = 0 ]; then
