@@ -47,6 +47,88 @@ opent() {
 
 
 
+
+
+bookmarks_file=~/.bookmarks
+
+# Create bookmarks_file it if it doesn't exist
+if [[ ! -f $bookmarks_file ]]; then
+  touch $bookmarks_file
+fi
+
+bookmark (){
+  bookmark_name=$1
+
+  if [[ -z $bookmark_name ]]; then
+    echo 'Invalid name, please provide a name for your bookmark. For example:'
+    echo '  bookmark foo'
+  else
+    bookmark="`pwd`|$bookmark_name" # Store the bookmark as folder|name
+
+    if [[ -z `grep "|$bookmark_name" $bookmarks_file` ]]; then
+      echo $bookmark >> $bookmarks_file
+      echo "Bookmark '$bookmark_name' saved"
+    else
+      echo "Bookmark '$bookmark_name' already exists. Replace it? (y or n)"
+      while read replace
+      do
+        if [[ $replace = "y" ]]; then
+          # Delete existing bookmark
+          sed "/.*|$bookmark_name/d" $bookmarks_file > ~/.tmp && mv ~/.tmp $bookmarks_file
+          # Save new bookmark
+          echo $bookmark >> $bookmarks_file
+          echo "Bookmark '$bookmark_name' saved"
+          break
+        elif [[ $replace = "n" ]]; then
+          break
+        else
+          echo "Please type 'y' or 'n'"
+        fi
+      done
+    fi
+  fi
+}
+
+# Delete the named bookmark from the list
+bookmarkdelete (){
+  bookmark_name=$1
+
+  if [[ -z $bookmark_name ]]; then
+    echo 'Invalid name, please provide the name of the bookmark to delete.'
+  else
+    bookmark=`grep "|$bookmark_name$" "$bookmarks_file"`
+
+    if [[ -z $bookmark ]]; then
+      echo 'Invalid name, please provide a valid bookmark name.'
+    else
+      cat $bookmarks_file | grep -v "|$bookmark_name$" $bookmarks_file > bookmarks_temp && mv bookmarks_temp $bookmarks_file
+      echo "Bookmark '$bookmark_name' deleted"
+    fi
+  fi
+}
+
+# Show a list of the bookmarks
+bookmarksshow (){
+  cat $bookmarks_file | awk '{ printf "%-40s%-40s%s\n",$1,$2,$3}' FS=\|
+}
+go(){
+  bookmark_name=$1
+
+  bookmark=`grep "|$bookmark_name$" "$bookmarks_file"`
+
+  if [[ -z $bookmark ]]; then
+    echo 'Invalid name, please provide a valid bookmark name. For example:'
+    echo '  go foo'
+    echo
+    echo 'To bookmark a folder, go to the folder then do this (naming the bookmark 'foo'):'
+    echo '  bookmark foo'
+  else
+    dir=`echo "$bookmark" | cut -d\| -f1`
+    cd "$dir"
+  fi
+}
+
+
 goto() {
     while [ $# -gt 0 ]; do
         arg=$1;
@@ -128,57 +210,3 @@ showHelp () {
 # T0D0 : version-ing be like:
 # $ goto --version
 # Goto v1.0.0
-
-
-
-"-b"    )
-    if [ $# != 1 ]; then
-        # There are additional arguments, so find out how many
-        array=( $@ );
-        len=${#array[@]};
-
-        searchAndPlay() {
-            type="$1"
-            Q="$2"
-        }
-
-        case $2 in
-            "list"  )
-                _args=${array[@]:2:$len};
-                Q=$_args;
-
-                cecho "Searching playlists for: $Q";
-
-                results=$( \
-                    curl -s -G $SPOTIFY_SEARCH_API --data-urlencode "q=$Q" -d "type=playlist&limit=10&offset=0" -H "Accept: application/json" -H "Authorization: Bearer ${SPOTIFY_ACCESS_TOKEN}" \
-                    | grep -E -o "spotify:user:[a-zA-Z0-9_]+:playlist:[a-zA-Z0-9]+" -m 10 \
-                )
-
-                count=$( \
-                    echo "$results" | grep -c "spotify:user" \
-                )
-
-            "album" | "artist" | "track"    )
-                _args=${array[@]:2:$len};
-                searchAndPlay $2 "$_args";;
-
-            "uri"  )
-                SPOTIFY_PLAY_URI=${array[@]:2:$len};;
-
-            *   )
-                _args=${array[@]:1:$len};
-                searchAndPlay track "$_args";;
-        esac
-
-        if [ "$SPOTIFY_PLAY_URI" != "" ]; then
-            cecho "Playing Spotify URI";
-        else
-            cecho "No results when searching";
-        fi
-
-    else
-        # Show Bookmarks
-        cecho "Playing Spotify.";
-        osascript -e 'tell application "Spotify" to play';
-    fi
-    break ;;
