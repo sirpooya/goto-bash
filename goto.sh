@@ -31,26 +31,44 @@ uplink() {
     fi
 }
 
-go() { url=`pwd` ; parent="${PWD##*/}"; osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say "'$parent'"' ; echo $parent; }
+opent() { if [ $# -eq 0 ] ; then echo "no input!"; url=`pwd`; parent="${PWD##*/}";
+else url=($1); parent="${$1##*/}"; fi;
+osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say "'$parent'"' ; echo $parent; }
 
 goto() {
-    if [ $# -eq 0 ] ; then
-    url=`pwd`;
-    elif [ $# = "ver" ] ; then 
-    echo "Goto 1.0"; 
+    while [ $# -gt 0 ]; do
+        arg=$1;
+        case $arg in
+            "--version" )
+                showVersion;
+                break ;;
+
+            "info" )
+                info=`osascript -e 'tell application "Finder"
+                end tell
+                return 0'`
+                cecho "$info";
+                break ;;
+
+            "share"     )
+                adr=$PWD
+                echo -n $adr | pbcopy
+                break;;
+
+            "help" | * )
+                showHelp;
+                break ;;
+
+            "-a" | * )
+                showHelp;
+                break ;;
+        esac
+    done
+
     else url="$1"; 
     fi ;
-    osascript -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say ""' ;
+ 
 }
-
-
-
-
-
-
-
-
-
 
 
 showVersion () {
