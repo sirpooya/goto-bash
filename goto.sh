@@ -64,9 +64,6 @@ goto() {
                 break ;;
         esac
     done
-
-    else url="$1"; 
-    fi ;
  
 }
 
@@ -76,14 +73,21 @@ showVersion () {
 }
 
 showHelp () {
-    echo "Usage:";
+    echo "  USAGE:";
     echo;
-    echo "  `basename $0` <command>";
+    echo "    Goto <command>";
+    #echo "  `basename $0` <command>";
     echo;
-    echo "Commands:";
+    echo "  COMMANDS:";
     echo;
-    echo "  go <bookmark name>               # Gos to directory.";
-    echo "  save <bookmark name>             # make new alias to directory.";
+    echo "    opent                             # Open current directory in new Finder Tab.";
+    echo "    opent <location>                  # Open location in new Finder Tab.";
+    echo "    go <bookmark name>                # Gos to directory.";
+    echo "    save <bookmark name>              # make new alias to directory.";
+    echo "    help                              # show help file.";
+    echo "    --version                         # Show version.";
+    echo;
+    echo;
 }
 
 #if [ $# = 0 ]; then
