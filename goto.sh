@@ -90,7 +90,7 @@ bookmark (){
 }
 
 # Delete the named bookmark from the list
-bookmarkdelete (){
+deletemark (){
   bookmark_name=$1
 
   if [[ -z $bookmark_name ]]; then
@@ -108,10 +108,11 @@ bookmarkdelete (){
 }
 
 # Show a list of the bookmarks
-bookmarksshow (){
+showmarks (){
   cat $bookmarks_file | awk '{ printf "%-40s%-40s%s\n",$1,$2,$3}' FS=\|
 }
-go(){
+
+goto(){
   bookmark_name=$1
 
   bookmark=`grep "|$bookmark_name$" "$bookmarks_file"`
@@ -132,7 +133,12 @@ goback() {
   cd $OLDPWD;
 }
 
-goto() {
+cpydir() {
+  adr=$PWD;
+  echo -n $adr | pbcopy;
+  }
+
+go() {
     while [ $# -gt 0 ]; do
         arg=$1;
         case $arg in
@@ -142,21 +148,36 @@ goto() {
 
             "info" )
                 info=`osascript -e 'tell application "Finder"
+                activate
                 end tell
                 return 0'`
                 cecho "$info";
                 break ;;
 
-            "share/-cp"     )
-                adr=$PWD
-                echo -n $adr | pbcopy
+            "-cp"     )
+                cpydir;
                 break;;
 
-            "help" | * )
-                showHelp;
+            "share"     )
+                cpydir;
+                break;;
+
+            "-b"    )
+                if [ $# != 1 ]; then
+                  # There are additional arguments, so find out how many
+                  #array=( $@ );
+                  #len=${#array[@]};
+                  #case $2 in
+                  #    "list"  )
+                  #    cecho "Searching playlists for: $Q";
+                  #esac
+                  bookmark $2;
+                else
+                  showmarks;
+                fi
                 break ;;
 
-            "-b" )
+            "help" | * )
                 showHelp;
                 break ;;
         esac
@@ -181,12 +202,13 @@ showHelp () {
     echo "    opent <location>                  # Open location in new Finder Tab.";
     echo;
     echo "    go                                # Shows help.";
-    echo "    go <directory>                    # Goes to directory.";
+    echo "    go /User/ ./Home ~/help           # Goes to directory.";
     echo "    go -all                           # Shows all bookmarks.";
     echo "    go <bookmark name>                # Goes to bookmarked directory.";
-    echo "    go -b                             # Saves current directory to bookmarks with original folder name .";
-    echo "    go -b <bookmark name>             # Saves current directory to bookmarks with given name";
-    echo "    go back                           # Goes back in history";   
+    echo "    go -b                             # Saves current directory to bookmarks with folder name.";
+    echo "    go -b <bookmark name> | --save    # Saves current directory to bookmarks with given name";
+    echo "    go back                           # Goes back in history";
+    echo "    go -cp                            # Copy address to clipboard";
     echo;
     echo "    mkals                             # Makes Finder Alias";
     echo "    search                            # Searchs for a keyword in files & folders";
