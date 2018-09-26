@@ -39,24 +39,28 @@ cecho() {
     else
       while [ $2 -gt 0 ] ; do
         case $arg2 in
-          "1" )
+          "1" ) #red
             color=$(tput setaf 1);
             break ;;
 
-          "2" )
+          "2" ) #green
             color=$(tput setaf 2);
             break ;;
 
-          "3" )
+          "3" ) #yellow
             color=$(tput setaf 3);
             break ;;
 
-          "4" )
+          "4" ) #blue
             color=$(tput setaf 4);
             break ;;
 
-          "5" )
+          "5" ) #magenta
             color=$(tput setaf 5);
+            break ;;
+
+          "6" ) #cyan
+            color=$(tput setaf 6);
             break ;;
         esac
       done
@@ -88,16 +92,16 @@ bookmark (){
   bookmark_name=$1
 
   if [[ -z $bookmark_name ]]; then
-    cecho '🙈 Invalid name, please provide a name for your bookmark. For example:'
-    echo '  bookmark foo'
+    cecho '💩 Please type a valid name for your bookmark.' 3;
   else
     bookmark="`pwd`|$bookmark_name" # Store the bookmark as folder|name
 
     if [[ -z `grep "|$bookmark_name" $bookmarks_file` ]]; then
       echo $bookmark >> $bookmarks_file
-      echo "Bookmark '$bookmark_name' saved"
+      cecho "✅ Bookmark '$bookmark_name' saved" 2;
+ 
     else
-      echo "Bookmark '$bookmark_name' already exists. Replace it? (y or n)"
+      cecho "🐵 Bookmark '$bookmark_name' already exists. Replace it? (y or n)" 5;
       while read replace
       do
         if [[ $replace = "y" ]]; then
@@ -105,12 +109,12 @@ bookmark (){
           sed "/.*|$bookmark_name/d" $bookmarks_file > ~/.tmp && mv ~/.tmp $bookmarks_file
           # Save new bookmark
           echo $bookmark >> $bookmarks_file
-          echo "Bookmark '$bookmark_name' saved"
+          cecho "✅ Bookmark '$bookmark_name' saved" 2;
           break
         elif [[ $replace = "n" ]]; then
           break
         else
-          echo "Please type 'y' or 'n'"
+          cecho "Please type 'y' or 'n' :" 5;
         fi
       done
     fi
@@ -122,15 +126,15 @@ deletemark (){
   bookmark_name=$1
 
   if [[ -z $bookmark_name ]]; then
-    echo 'Invalid name, please provide the name of the bookmark to delete.'
+    cecho '👊 Name Can not be empty.' 3;
   else
     bookmark=`grep "|$bookmark_name$" "$bookmarks_file"`
 
     if [[ -z $bookmark ]]; then
-      echo 'Invalid name, please provide a valid bookmark name.'
+      cecho '🙈 Invalid name, please provide a valid bookmark name.' 3;
     else
       cat $bookmarks_file | grep -v "|$bookmark_name$" $bookmarks_file > bookmarks_temp && mv bookmarks_temp $bookmarks_file
-      echo "Bookmark '$bookmark_name' deleted"
+      cecho "❌ Bookmark '$bookmark_name' deleted" 1;
     fi
   fi
 }
@@ -148,7 +152,7 @@ goto(){
   bookmark=`grep "|$bookmark_name$" "$bookmarks_file"`
 
   if [[ -z $bookmark ]]; then
-    echo 'Invalid name, please provide a valid bookmark name. For example:'
+    cecho '🙈 Invalid name, please provide a valid bookmark name. For example:'
     echo '  go foo'
     echo
     echo 'To bookmark a folder, go to the folder then do this (naming the bookmark 'foo'):'
@@ -184,23 +188,16 @@ go() {
               break;;
 
             "-s" | "-b"   )
-                if [ $# != 1 ]; then
-                  # There are additional arguments, so find out how many
-                  #array=( $@ );
-                  #len=${#array[@]};
-                  #case $2 in
-                  #    "list"  )
-                  #    cecho "Searching playlists for: $Q";
-                  #esac
-                  bookmark $2;
-                else
-                  showmarks;
-                fi
-                break ;;
+              bookmark $2;
+              break ;;
+
+            "-d" )
+              deletemark $2;
+              break ;;
 
             "help" )
-                showHelp;
-                break ;;
+              showHelp;
+              break ;;
             * )
                 if [ $# != 1 ]; then
                   cecho "🙈 Whaaaat?!!";
@@ -231,19 +228,19 @@ showHelp () {
     echo;
     echo "    go                                # Shows help.";
     echo "    go /User/ ./Home ~/help           # Goes to directory.";
-    echo "    go -all                           # Shows all bookmarks.";
+    echo "    go -all | -list                   # Shows all bookmarks.";
     echo "    go <bookmark name>                # Goes to bookmarked directory.";
-    echo "    go -b                             # Saves current directory to bookmarks with folder name.";
-    echo "    go -b <bookmark name> | --save    # Saves current directory to bookmarks with given name";
+    echo "    go -s <bookmark name> | --save    # Saves current directory to bookmarks with given name";
     echo "    go back                           # Goes back in history";
     echo "    go -cp                            # Copy address to clipboard";
+    echo "    go -d                             # Deletes bookmark";
     echo;
     echo "    mkals                             # Makes Finder Alias";
     echo "    search                            # Searchs for a keyword in files & folders";
     echo "    own                               # Change file ownership as root & executable.";
     echo;
     echo "    help                              # show help file.";
-    echo "    --version                         # Show version.";
+    echo "    -ver                         # Show version.";
     echo;
     echo;
 }
