@@ -1,12 +1,18 @@
-# goto
+# go() command for bash
 `goto-bash`
 `goto-terminal`
 `goto-command`
 `goto-function`
 
+![Screenshot](goto_bash.png)
+
+🍺 Provides bookmarking ability for folders/directories in bash.
+
+🍺 Open any directory inside of Finder _tab_ instead of window (macOS).
+
 🍺 Go to any directory or folder alias you created.
 
-Provides bookmarking ability for folders/directories in bash.
+
 
 /Users/sirrichard/Library/Services
 
@@ -20,30 +26,34 @@ Provides bookmarking ability for folders/directories in bash.
 		
 # Usage		
 
-To bookmark a folder : 
+###1. Bookmarking
 
 Go to folder, then bookmark it like so:
 
-	bookmark foo
+	go -s <bookmark name>
 
-The bookmark will be named "foo"
+###2. Go to bookmark folder
 
-When you want to get back to that folder use:
+When you want to go to a bookmark:
 
-	go foo
+	go <bookmark name>
 
-To see a list of the bookmarks:
+###3. Bookmark list
+To view list of all bookmarks :
  
-	bookmarksshow
+	go
+or
 
-Tab completion works, simply press [tab]:
+	go -list
 
-	go sho[tab]
+###4. Auto Completion
+For using auto-completion feature, simply press [tab]:
+
+	go app[tab]
 
 
-![MacDown logo](./icon.png)
 
-![Screenshot](./scrnshot.png)
+
 
 
 
