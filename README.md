@@ -6,29 +6,29 @@
 
 ![Screenshot](screenshot.png)
 
-####🍺 Provides bookmarking ability for folders/directories in bash.
+#### 🍺 Provides bookmarking ability for folders/directories in bash.
 
-####🍺 Open any directory inside of Finder _tab_ instead of window (macOS).
+#### 🍺 Open any directory inside of Finder _tab_ instead of window (macOS).
 
-####🍺 Go to any directory or folder alias you created.
+#### 🍺 Go to any directory or folder alias you created.
 
 
 --
 # Usage		
 
-###1. Bookmarking
+### 1. Bookmarking
 
 Go to folder, then bookmark it like so:
 
 	go -s <bookmark name>
 
-###2. Fast Navigation
+### 2. Fast Navigation
 
 When you want to go to a bookmark:
 
 	go <bookmark name>
 
-###3. Bookmark list
+### 3. Bookmark list
 To view list of all bookmarks :
  
 	go
@@ -36,12 +36,12 @@ or
 
 	go -list
 
-###4. Auto Completion
+### 4. Auto Completion
 For using auto-completion feature, simply press [tab]:
 
 	go app[tab]
 
-###5. Open in Finder tab (macOS) 🥐
+### 5. Open in Finder tab (macOS) 🥐
 
 You can use `opent` command instead of `open` directory in Finder _Tab_ instead of new window.
 	
@@ -51,7 +51,7 @@ You can use `opent` command instead of `open` directory in Finder _Tab_ instead 
 
 #Installation
 -
-###🍺 Method 1 - Brew
+### 🍺 Method 1 - Brew
 
 	brew install goto
 
@@ -73,7 +73,7 @@ You can use `opent` command instead of `open` directory in Finder _Tab_ instead 
 		
 		
 --
-#♿️ open-in-terminal service (macOS)
+# ♿️ open-in-terminal service (macOS)
 Using this service you can open Finder path in Terminal tab.
 
 1. Copy `Open in Terminal Tab.workflow` file to Services folder:
@@ -87,7 +87,7 @@ Using this service you can open Finder path in Terminal tab.
 
 
 
-#🖖
+# 🖖
 If you find this interesting, you should [follow me on
 Twitter](https://twitter.com/_pooya) or visit my [personal website](https://pooya.ml) to learn about the other
 things I do.
