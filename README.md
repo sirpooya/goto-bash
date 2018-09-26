@@ -47,6 +47,7 @@ You can use `opent` command instead of `open` directory in Finder _Tab_ instead 
 	
 	opent
 
+![Giphy](giphy.gif)
 
 #Installation
 -
