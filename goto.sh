@@ -128,6 +128,9 @@ go(){
   fi
 }
 
+goback() {
+  cd $OLDPWD;
+}
 
 goto() {
     while [ $# -gt 0 ]; do
@@ -182,7 +185,8 @@ showHelp () {
     echo "    go -all                           # Shows all bookmarks.";
     echo "    go <bookmark name>                # Goes to bookmarked directory.";
     echo "    go -b                             # Saves current directory to bookmarks with original folder name .";
-    echo "    go -b <bookmark name>             # Saves current directory to bookmarks with given name";   
+    echo "    go -b <bookmark name>             # Saves current directory to bookmarks with given name";
+    echo "    go back                           # Goes back in history";   
     echo;
     echo "    mkals                             # Makes Finder Alias";
     echo "    search                            # Searchs for a keyword in files & folders";
