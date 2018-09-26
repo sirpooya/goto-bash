@@ -56,11 +56,11 @@ You can use `opent` command instead of `open` directory in Finder _Tab_ instead 
 	brew install goto
 
 ### 🚀 Method 2 - Clone
-	git clone https://github.com/sirpooya/goto-bash.git goto-bash
-	sudo cp goto-bash/goto.sh /etc/
+	git clone https://github.com/sirpooya/goto.git goto-bash
+	sudo cp goto-bash/goto.sh /usr/local/bin
 
 ### 🔧 Method 3 - wget
-	sudo wget -O /etc/goto.sh https://raw.githubusercontent.com/sirpooya/goto-bash/master/goto.sh
+	sudo wget -O /usr/local/bin/goto.sh https://raw.githubusercontent.com/sirpooya/goto-bash/master/goto.sh
 
 ### 🥢 Method 4 - Manual
 1. Download and extract archive, then copy file:
@@ -69,7 +69,15 @@ You can use `opent` command instead of `open` directory in Finder _Tab_ instead 
 
 2. source it in `.bashrc` or `.bash_profile` (or other bash startup file):
 
-		source ~/bin/bashmarks.sh
+		source ~/bin/goto.sh
+		
+3. make sure its executable :
+	
+		sudo chmod +x goto.sh
+		
+4. Change your `$PATH` :
+
+        #export PATH=$PATH":$HOME/bin"
 		
 		
 --
