@@ -114,7 +114,7 @@ bookmark (){
         elif [[ $replace = "n" ]]; then
           break
         else
-          cecho "Please type 'y' or 'n' :" 5;
+          cecho "🙈 Please type 'y' or 'n' :" 5;
         fi
       done
     fi
@@ -126,12 +126,12 @@ deletemark (){
   bookmark_name=$1
 
   if [[ -z $bookmark_name ]]; then
-    cecho '👊 Name Can not be empty.' 3;
+    cecho '👊 Type bookmark name to delete.' 3;
   else
     bookmark=`grep "|$bookmark_name$" "$bookmarks_file"`
 
     if [[ -z $bookmark ]]; then
-      cecho '🙈 Invalid name, please provide a valid bookmark name.' 3;
+      cecho '🙈 Bookmark name is invalid.' 3;
     else
       cat $bookmarks_file | grep -v "|$bookmark_name$" $bookmarks_file > bookmarks_temp && mv bookmarks_temp $bookmarks_file
       cecho "❌ Bookmark '$bookmark_name' deleted" 1;
@@ -148,15 +148,10 @@ showmarks (){
 
 goto(){
   bookmark_name=$1
-
   bookmark=`grep "|$bookmark_name$" "$bookmarks_file"`
 
   if [[ -z $bookmark ]]; then
-    cecho '🙈 Invalid name, please provide a valid bookmark name. For example:'
-    echo '  go foo'
-    echo
-    echo 'To bookmark a folder, go to the folder then do this (naming the bookmark 'foo'):'
-    echo '  bookmark foo'
+    cecho '🙈 Bookmark not found!' 3;
   else
     dir=`echo "$bookmark" | cut -d\| -f1`
     cd "$dir"
@@ -195,12 +190,16 @@ go() {
               deletemark $2;
               break ;;
 
+            "-list" | "-all" )
+              showmarks;
+              break ;;
+
             "help" )
               showHelp;
               break ;;
             * )
                 if [ $# != 1 ]; then
-                  cecho "🙈 Whaaaat?!!";
+                  cecho "🙈 Whaaaat?!!" 3;
                 else
                   goto $1;
                 fi
