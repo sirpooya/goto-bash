@@ -31,18 +31,46 @@ uplink() {
     fi
 }
 
-cecho(){
+cecho() {
+    arg=$1;
+    arg2=$2;
+    if [[ -z $arg2 ]] ; then
+      color=$(tput setaf 4);
+    else
+      while [ $2 -gt 0 ] ; do
+        case $arg2 in
+          "1" )
+            color=$(tput setaf 1);
+            break ;;
+
+          "2" )
+            color=$(tput setaf 2);
+            break ;;
+
+          "3" )
+            color=$(tput setaf 3);
+            break ;;
+
+          "4" )
+            color=$(tput setaf 4);
+            break ;;
+
+          "5" )
+            color=$(tput setaf 5);
+            break ;;
+        esac
+      done
+    fi
     bold=$(tput bold);
-    green=$(tput setaf 3);
     reset=$(tput sgr0);
-    echo $bold$green"$1"$reset;
+    echo $bold$color$arg$reset;
 }
 
 opent() { 
     # T0DO : open directories inside : opent bin --> opne ./bin    
     if [ $# -eq 0 ] ; then url=`pwd`; parent="${PWD##*/}";
     else url=($1); parent="${url##*/}"; fi;
-    osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e 'say "'$parent'"' ; cecho "🙂 Opening \"$parent\" ...";
+    osascript  -e 'tell application "Finder"' -e 'activate' -e 'tell application "System Events"' -e 'keystroke "t" using command down' -e 'end tell' -e 'set target of front Finder window to ("'$url'" as POSIX file)' -e 'end tell' -e '--say "'$parent'"' ; cecho "🙂 Opening \"$parent\" ..." 5;
 }
 
 
@@ -60,7 +88,7 @@ bookmark (){
   bookmark_name=$1
 
   if [[ -z $bookmark_name ]]; then
-    echo 'Invalid name, please provide a name for your bookmark. For example:'
+    cecho '🙈 Invalid name, please provide a name for your bookmark. For example:'
     echo '  bookmark foo'
   else
     bookmark="`pwd`|$bookmark_name" # Store the bookmark as folder|name
@@ -109,7 +137,9 @@ deletemark (){
 
 # Show a list of the bookmarks
 showmarks (){
-  cat $bookmarks_file | awk '{ printf "%-40s%-40s%s\n",$1,$2,$3}' FS=\|
+  yellow=$(tput setaf 3); normal=$(tput sgr0);
+  cat $bookmarks_file | awk '{ printf "👉 '${yellow}'%-10s'${normal}'%s\n",$2,$1}' FS=\|
+  #cat $bookmarks_file | awk '{ printf "%-40s%-40s%s\n",$1,$2,$3}' FS=\|
 }
 
 goto(){
@@ -139,30 +169,21 @@ cpydir() {
   }
 
 go() {
+    if [ $# -eq 0 ] ; then
+      showmarks;
+    fi
     while [ $# -gt 0 ]; do
         arg=$1;
         case $arg in
-            "--version" )
-                showVersion;
-                break ;;
+            "-ver"  | "--version")
+              showVersion;
+              break ;;
 
-            "info" )
-                info=`osascript -e 'tell application "Finder"
-                activate
-                end tell
-                return 0'`
-                cecho "$info";
-                break ;;
+            "-cp"    )
+              cpydir;
+              break;;
 
-            "-cp"     )
-                cpydir;
-                break;;
-
-            "share"     )
-                cpydir;
-                break;;
-
-            "-b"    )
+            "-s" | "-b"   )
                 if [ $# != 1 ]; then
                   # There are additional arguments, so find out how many
                   #array=( $@ );
@@ -177,8 +198,15 @@ go() {
                 fi
                 break ;;
 
-            "help" | * )
+            "help" )
                 showHelp;
+                break ;;
+            * )
+                if [ $# != 1 ]; then
+                  cecho "🙈 Whaaaat?!!";
+                else
+                  goto $1;
+                fi
                 break ;;
         esac
     done
