@@ -22,7 +22,7 @@ Go to folder, then bookmark it like so:
 
 	go -s <bookmark name>
 
-###2. Go to bookmark folder
+###2. Fast Navigation
 
 When you want to go to a bookmark:
 
@@ -41,43 +41,52 @@ For using auto-completion feature, simply press [tab]:
 
 	go app[tab]
 
+###5. Open in Finder tab (macOS) 🥐
+
+You can use `opent` command instead of `open` directory in Finder _Tab_ instead of new window.
+	
+	opent
 
 
 #Installation
 -
-### Method 1 - Brew
+###🍺 Method 1 - Brew
 
 	brew install goto
 
-### Method 2 - clone
+### 🚀 Method 2 - Clone
 	git clone https://github.com/sirpooya/goto-bash.git goto-bash
-	sudo cp goto-bash/src/goto.sh /etc/
+	sudo cp goto-bash/goto.sh /etc/
 
-### Method 3 - wget
-	sudo wget -O /etc/goto.sh https://raw.githubusercontent.com/sirpooya/goto-bash/master/src/goto.sh
+### 🔧 Method 3 - wget
+	sudo wget -O /etc/goto.sh https://raw.githubusercontent.com/sirpooya/goto-bash/master/goto.sh
 
-### Method 4 - Manual
-
-Copy `Open in Terminal Tab.workflow` file to following path:
-
-	/Users/sirrichard/Library/Services
-
-2. 	copy it to your home folder
-
-![Screenshot](settings.png)
+### 🥢 Method 4 - Manual
+1. Download and extract archive, then copy file:
 
 		sudo cp goto-bash/goto.sh ~/bin
 
-3. source it in `.bashrc` or `.bash_profile` (or other bash startup file):
+2. source it in `.bashrc` or `.bash_profile` (or other bash startup file):
 
 		source ~/bin/bashmarks.sh
-
+		
+		
 --
-# opent
-`open-in-tab`
+#♿️ open-in-terminal service (macOS)
+Using this service you can open Finder path in Terminal tab.
 
-***opent*** is a simple Bash/Apple script to empower `open` command in Terminal & open current directory in Finder _Tab_ from command line on a Mac.
+1. Copy `Open in Terminal Tab.workflow` file to Services folder:
 
+		/Users/sirrichard/Library/Services
+
+2. 	Create a shortcut for this service in Prefrences:
+
+![Screenshot](settings.png)
+
+
+
+
+#🖖
 If you find this interesting, you should [follow me on
-Twitter](https://twitter.com/copingbear) to learn about the other
+Twitter](https://twitter.com/_pooya) or visit my [personal website](https://pooya.ml) to learn about the other
 things I do.
