@@ -6,14 +6,14 @@
 
 ![Screenshot](screenshot.png)
 
-#### 🍺 Provides bookmarking ability for folders/directories in bash.
+####  Provides bookmarking ability for folders/directories in bash.
 
-#### 🍺 Open any directory inside of Finder _tab_ instead of window (macOS).
+####  Open any directory inside of Finder _tab_ instead of window (macOS).
 
-#### 🍺 Go to any directory or folder alias you created.
+####  Go to any directory or folder alias you created.
 
 
---
+
 # Usage		
 
 ### 1. Bookmarking
@@ -41,7 +41,7 @@ For using auto-completion feature, simply press [tab]:
 
 	go app[tab]
 
-### 5. Open in Finder tab (macOS) 🥐
+### 5. Open in Finder tab (macOS) 
 
 You can use `opent` command instead of `open` directory in Finder _Tab_ instead of new window.
 	
@@ -49,20 +49,20 @@ You can use `opent` command instead of `open` directory in Finder _Tab_ instead 
 
 ![Giphy](giphy.gif)
 
-#Installation
+# Installation
 -
-### 🍺 Method 1 - Brew
+###  Method 1 - Brew
 
 	brew install goto
 
-### 🚀 Method 2 - Clone
+###  Method 2 - Clone
 	git clone https://github.com/sirpooya/goto.git goto-bash
 	sudo cp goto-bash/goto.sh /usr/local/bin
 
-### 🔧 Method 3 - wget
+###  Method 3 - wget
 	sudo wget -O /usr/local/bin/goto.sh https://raw.githubusercontent.com/sirpooya/goto-bash/master/goto.sh
 
-### 🥢 Method 4 - Manual
+###  Method 4 - Manual
 1. Download and extract archive, then copy file:
 
 		sudo cp goto-bash/goto.sh ~/bin
@@ -80,8 +80,8 @@ You can use `opent` command instead of `open` directory in Finder _Tab_ instead 
         #export PATH=$PATH":$HOME/bin"
 		
 		
---
-# ♿️ open-in-terminal service (macOS)
+
+# ️ open-in-terminal service (macOS)
 Using this service you can open Finder path in Terminal tab.
 
 1. Copy `Open in Terminal Tab.workflow` file to Services folder:
@@ -95,7 +95,7 @@ Using this service you can open Finder path in Terminal tab.
 
 
 
-# 🖖
+# 
 If you find this interesting, you should [follow me on
 Twitter](https://twitter.com/_pooya) or visit my [personal website](https://pooya.ml) to learn about the other
 things I do.
