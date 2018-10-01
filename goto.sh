@@ -174,7 +174,7 @@ goto() {
     while [ $# -gt 0 ]; do
         arg=$1;
         case $arg in
-            "-ver"  | "--version")
+            "-ver"  | "--version" | "-v" )
               showVersion;
               break ;;
 
@@ -190,7 +190,7 @@ goto() {
               deletemark $2;
               break ;;
 
-            "-list" | "-all" )
+            "-list" | "-all" | "-l" )
               showmarks;
               break ;;
 
@@ -222,24 +222,24 @@ showHelp () {
     echo;
     echo "  COMMANDS:";
     echo;
-    echo "    opent                             # Open current directory in new Finder Tab.";
-    echo "    opent <location>                  # Open location in new Finder Tab.";
+    echo "    opent                             # (Mac Only) Open current directory in new Finder Tab.";
+    echo "    opent <location>                  # (Mac Only) Open location in new Finder Tab.";
     echo;
-    echo "    go                                # Shows help.";
-    echo "    go /User/ ./Home ~/help           # Goes to directory.";
-    echo "    go -all | -list                   # Shows all bookmarks.";
-    echo "    go <bookmark name>                # Goes to bookmarked directory.";
-    echo "    go -s <bookmark name> | --save    # Saves current directory to bookmarks with given name";
-    echo "    go back                           # Goes back in history";
-    echo "    go -cp                            # Copy address to clipboard";
-    echo "    go -d                             # Deletes bookmark";
+    echo "    goto                              # Shows help.";
+    echo "    goto /User/ ./Home ~/help         # Goes to directory.";
+    echo "    goto -all | -list                 # Shows all bookmarks.";
+    echo "    goto <bookmark name>              # Goes to bookmarked directory.";
+    echo "    goto -s <bookmark name>           # Saves current directory to bookmarks with given name";
+    echo "    goto back                         # Goes back in history";
+    echo "    goto -cp                          # Copy address to clipboard";
+    echo "    goto -d                           # Deletes bookmark";
     echo;
-    echo "    mkals                             # Makes Finder Alias";
-    echo "    search                            # Searchs for a keyword in files & folders";
-    echo "    own                               # Change file ownership as root & executable.";
+    #echo "    mkals                             # Makes Finder Alias";
+    #echo "    search                            # Searchs for a keyword in files & folders";
+    #echo "    own                               # Change file ownership as root & executable.";
     echo;
     echo "    help                              # show help file.";
-    echo "    -ver                         # Show version.";
+    echo "    -ver                              # Show version.";
     echo;
     echo;
 }
