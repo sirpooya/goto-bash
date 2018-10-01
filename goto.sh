@@ -146,7 +146,7 @@ showmarks (){
   #cat $bookmarks_file | awk '{ printf "%-40s%-40s%s\n",$1,$2,$3}' FS=\|
 }
 
-goto(){
+gotodir(){
   bookmark_name=$1
   bookmark=`grep "|$bookmark_name$" "$bookmarks_file"`
 
@@ -167,7 +167,7 @@ cpydir() {
   echo -n $adr | pbcopy;
   }
 
-go() {
+goto() {
     if [ $# -eq 0 ] ; then
       showmarks;
     fi
@@ -201,7 +201,7 @@ go() {
                 if [ $# != 1 ]; then
                   cecho "🙈 Whaaaat?!!" 3;
                 else
-                  goto $1;
+                  gotodir $1;
                 fi
                 break ;;
         esac
